@@ -1,7 +1,14 @@
 {% extends 'core/base.html' %}
 {% block content %}
 
-<h1>Core deck</h1>
 
+    <div class="container">
+        <h1>Decks Table:</h1>
+        <button class='btn' hx-get="{% url 'add_deck' %}" hx-target="next tbody" hx-swap="afterbegin">
+            <i class="bi bi-plus-lg" style="font-size: 2rem;"></i>
+            <small class="ms-2">add deck</small>
+        </button>
+        <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'decks_table' %}" hx-trigger="load"></div>
+    </div>
 
 {% endblock content %}

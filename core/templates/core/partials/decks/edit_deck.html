@@ -1,0 +1,14 @@
+<tr>
+    <td>{{ form.name }}
+        {{ form.name.errors}}
+    </td>
+    <td>{{ form.mtgFormat }}
+        {{ form.mtgFormat.errors }}
+    </td>
+    <td>
+        {{ form.archetype }}
+        {{ form.archetype.errors }}
+    </td>
+    <td><a href="#" hx-post="{% url 'edit_deck_submit' deck.pk %}" hx-target="closest tr" hx-swap="outerHTML" hx-include="closest tr" class="text-secondary"><i class="bi bi-check2"></i></svg></a></td>
+    <td><a href="#" hx-get="{% url 'edit_deck_submit' deck.pk %}" hx-target="closest tr" hx-swap="outerHTML" class="text-secondary"><i class="bi bi-x-lg"></i></a></td>
+</tr>

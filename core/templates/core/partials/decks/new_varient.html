@@ -1,0 +1,13 @@
+<tr>
+    {% if flavor.isdefault %}
+    <td>
+         <strong>{{flavor.name}}</strong>
+    </td>
+    {% else %}
+    <td>{{flavor.name}}</td>
+    {% endif %}
+    <td>
+        <button class='btn' hx-get="#" hx-target="closest tr" hx-swap="outerHTML"><svg class="bi bi-pencil" width="24" height="24"><use xlink:href="#pencil"></svg></button>
+        <button class='btn' hx-confirm='Are you Sure?' hx-target="closest tr" hx-swap="outerHTML swap:1s" hx-delete="#"><svg class="bi bi-trash3" width="24" height="24"><use xlink:href="#trash3"></svg></button>
+    </td>
+</tr>

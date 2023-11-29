@@ -1,0 +1,49 @@
+<tr>
+    <td>{{ deck.dateCreated|date:"M d, Y" }}</td>
+    <td>{{ deck.name }}</td>
+    <td>{{ deck.mtgFormat }}</td>
+    <td>{{ deck.archetype }}</td>
+    <td> 
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{deck.id}}">Varients ({{deck.flavors.count}})</button>
+    </td>
+    <td>
+        <button class='btn' hx-get="{% url 'edit_deck' deck.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil" style="font-size: 1.5rem"></i></svg></button>
+        <button class='btn' hx-confirm='Are you Sure?' hx-target="closest tr" hx-swap="outerHTML swap:1s" hx-delete="{% url 'delete_deck' deck.pk %}"><i class="bi bi-trash3" style="font-size: 1.5rem"></i></button>
+    </td>
+</tr>
+<tr class="collapse" id="collapse{{deck.id}}">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+        <button class='btn' hx-get="{% url 'add_varient' deck.pk %}" hx-target="next tbody" hx-swap="afterbegin">
+            <svg class="bi bi-plus" width="32" height="32"><use xlink:href="#plus"></svg>
+        </button>
+    </td>
+    
+    
+    <td>
+        <table class="table">
+            <tbody>
+                {% for flavor in deck.flavors.all %}
+
+                    <tr>
+                        {% if flavor.isdefault %}
+                        <td>
+                             <strong>{{flavor.name}}</strong>
+                        </td>
+                        {% else %}
+                        <td>{{flavor.name}}</td>
+                        {% endif %}
+                        <td>
+                            <button class='btn' hx-get="{% url 'edit_flavor' flavor.pk %}" hx-target="closest tr" hx-swap="outerHTML"><svg class="bi bi-pencil" width="24" height="24"><use xlink:href="#pencil"></svg></button>
+                            <button class='btn' hx-confirm='Are you Sure?' hx-target="closest tr" hx-swap="outerHTML swap:1s" hx-delete="{% url 'delete_flavor' flavor.pk %}"><svg class="bi bi-trash3" width="24" height="24"><use xlink:href="#trash3"></svg></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </td>
+    <td></td>
+</tr>

@@ -1,0 +1,24 @@
+<tr>
+    <td>{{ form.name }}
+        {{ form.name.errors}}
+    </td>
+    <td>{{ form.deck }}
+        {{ form.deck.errors }}
+    </td>
+    <td>
+        {{ form.isdefault }}
+        {{ form.isdefault.errors }}
+    </td>
+    <td><a href="#" hx-post="{% url 'submit_new_flavor' %}" hx-target="closest tr" hx-swap="outerHTML" hx-include="closest tr" class="me-3">
+            <svg class="bi bi-check-lg me-2" width="32" height="32">
+              <use xlink:href="#checkmark"/>
+            </svg>Save
+         </a>
+
+      <a href="#" hx-get="{% url 'cancel_add_deck' %}" hx-target="closest tr" hx-swap="outerHTML"class="text-secondary">
+            <svg class="bi bi-x-lg me-2" width="32" height="32">
+              <use xlink:href="#cancel"/>
+            </svg>Discard
+         </a>
+    </td>
+</tr>
