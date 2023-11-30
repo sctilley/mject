@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+<div class="container">
+    {% if lform %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    Add new league
+                </legend>
+                {{ lform|crispy }}
+            </fieldset>
+            <button type="submit">add</button>
+        </form>
+    {% else %}
+    <p>Please finish your open league first.</p>
+    {% endif %}
+</div>

@@ -11,6 +11,13 @@ urlpatterns = [
 #leagues
 urlpatterns += [
     path('add_league', views.add_league, name='add_league'),
+    path('get_league_current', views.get_league_current, name='get_league_current'),
+    path('<int:match_pk>/edit_match', views.edit_match, name='edit_match'),
+    path('<int:match_pk>/edit_match_submit', views.edit_match_submit, name='edit_match_submit'),
+    path('<int:match_pk>/clear_match', views.clear_match, name='clear_match'),
+    path('get_leagues_accordion', views.get_leagues_accordion, name='get_leagues_accordion'),
+    path('<int:league_pk>/get_matches_table', views.get_matches_table, name='get_matches_table'),
+
 
 ]
 

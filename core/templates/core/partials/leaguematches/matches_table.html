@@ -1,0 +1,37 @@
+<table class="table table-hover matchtable">
+    <thead>
+        <th></th>
+        <th>their name</th>
+        <th>their deck</th>
+        <th>Game 1</th>
+        <th>Game 2</th>
+        <th>Game 3</th>
+        <th>result</th>
+
+        <th></th>
+        <th></th>
+    </thead>
+    <tbody>
+        {% for match in matches %}
+            <tr>
+                <td>{{ match.inLeagueNum }}.</td>
+                <td>{{ match.theirName }}</td>
+                <td>{{ match.theirDeck }}{% if match.theirFlavor %}, {{match.theirFlavor}}{% endif %}</td>
+                <td>{{ match.game1 }}</td>
+                <td>{{ match.game2 }}</td>
+                <td>{{ match.game3 }}</td>
+                {% if match.didjawin == 1 %}
+                    <td>Win!</td>
+                {% elif match.didjawin == 0 %}
+                    <td>loss :( </td>
+                {% else %}
+                    <td>unplayed</td>
+                {% endif %}
+                <td style="padding: 0;">
+                    <button class='btn' hx-get="{% url 'edit_match' match.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil" style="font-size: 2rem"></i></button>
+                    <button class='btn' hx-get="{% url 'clear_match' match.pk %}" hx-confirm="clear match data?" hx-target="closest tr" hx-swap="outerHTML" ><i class="bi bi-recycle" style="font-size: 1rem; color: red;"></i></svg></button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

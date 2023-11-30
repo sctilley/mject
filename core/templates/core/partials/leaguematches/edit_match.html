@@ -1,0 +1,67 @@
+<tr>
+    <td>
+        {{ match.inLeagueNum}}.
+    </td>
+    <td>
+      {% if match.theirName %}
+        <input list="theirnamex" name="username" id="theirname" value="{{match.theirName}}" autocomplete="off">
+      {% else %}
+        <input list="theirnamex" name="username" placeholder="their user name" id="theirname" autocomplete="off">
+      {% endif %}
+      <datalist id="theirnamex">
+        {% for match in usernamelist %}
+          <option value="{{match.theirName}}"></option>
+        {% endfor %}
+      </datalist>
+    </td>
+    <td>
+        <select name="decknflavor" id="decknflavorid">
+          {% if match.theirFlavor %}
+            <option value="{{match.theirDeck.id}}x{{match.theirFlavor.id}}" id="flavorid" selected>{{match.theirDeck.name}}, {{match.theirFlavor.name}}</option>
+          {% elif match.theirDeck %}
+            <option value="{{match.theirDeck.id}}" id="deckid" selected>{{match.theirDeck.name}}</option>
+          {% endif %}
+            <option value=""></option>
+            {% for deck in decks %}
+              {% if deck.flavors.count > 0 %}
+                {% for flavor in deck.flavors.all %} 
+                    <option value="{{deck.id}}x{{flavor.id}}" id="flavor{{flavor.id}}">{{deck.name}}{% if flavor.name != "none" %}, {{flavor.name}}{% endif %}</option>
+                {% endfor %}
+              {% else %}
+                <option value="{{deck.id}}" id="deckid">{{deck.name}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+    </td>
+
+    <td colspan="3">
+        <div class="form-check form-check-inline">
+          {% if match.game1 == 1 %}
+            <input class="form-check-input" type="checkbox" name="game1ch" id="game1id" value=1 checked>
+          {% else %}
+            <input class="form-check-input" type="checkbox" name="game1ch" id="game1id" value=1>
+          {% endif %}
+          <label class="form-check-label" for="inlineCheckbox1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          {% if match.game2 == 1 %}
+            <input class="form-check-input" type="checkbox" name="game2ch" id="game2id" value=1 checked>
+          {% else %}
+            <input class="form-check-input" type="checkbox" name="game2ch" id="game2id" value=1>
+          {% endif %}
+            <label class="form-check-label" for="inlineCheckbox2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          {% if match.game3 == 1 %}
+            <input class="form-check-input" type="checkbox" name="game3ch" id="game3id" value=1 checked>
+          {% else %}
+            <input class="form-check-input" type="checkbox" name="game3ch" id="game3id" value=1>
+          {% endif %}
+            <label class="form-check-label" for="inlineCheckbox3">3</label>
+        </div>
+    </td>
+    <td></td>
+
+    <td><a href="#" hx-post="{% url 'edit_match_submit' match.pk %}" hx-target="closest tr" hx-swap="outerHTML" hx-include="closest tr, #flavorcheck" class="text-secondary"><i class="bi bi-check-lg" style="font-size: 2rem;"></i></a>
+    <a href="#" hx-get="{% url 'edit_match_submit' match.pk %}" hx-target="closest tr" hx-swap="outerHTML" class="text-secondary ms-2"><i class="bi bi-x-lg" style="font-size: 2rem;"></i></a></td>
+</tr>
