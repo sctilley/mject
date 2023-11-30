@@ -88,7 +88,10 @@ def submit_new_deck(request):
         newdeck = form.save()
         newflavorname = request.POST['flavorname']
         if newflavorname:
-            print("yes")
+            Flavor.objects.create(
+                    deck_id=newdeck.pk,
+                    name = "none"
+                )
             if 'fisdefault' in request.POST:
                 Flavor.objects.create(
                     deck_id=newdeck.pk,
@@ -105,7 +108,6 @@ def submit_new_deck(request):
                     deck_id=newdeck.pk,
                     name = "none"
                 )
-            print("no")
 
     else:
         print("form error")
@@ -141,6 +143,11 @@ def submit_new_flavor(request):
             new_flavor.save()
         else:
             new_flavor.save()
+
+        affecteddeck = Deck.objects.get(id=new_flavor.deck.id)
+            
+        print("affecteddeck: ", affecteddeck)
+        newflavorsdecksflavors = Flavor.objects.filter()
         context['flavor'] = new_flavor
     else:
         print("form error")
