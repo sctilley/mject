@@ -1,5 +1,5 @@
 from django import forms
-from .models import Archetype, Deck, Flavor
+from .models import Archetype, Deck, Flavor, League, Match
 
 
 class DeckForm(forms.ModelForm):
@@ -28,4 +28,13 @@ class FlavorForm(forms.ModelForm):
             'deck',
             'name',
             'isdefault',
+        )
+
+class LeagueForm(forms.ModelForm):
+    class Meta:
+        model = League
+        fields = (
+            'mtgFormat',
+            'myDeck',
+            'myFlavor'
         )

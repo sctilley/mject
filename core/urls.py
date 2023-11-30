@@ -7,6 +7,14 @@ urlpatterns = [
     path('test/', views.test, name='test'),
 ]
 
+
+#leagues
+urlpatterns += [
+    path('add_league', views.add_league, name='add_league'),
+
+]
+
+#decks
 urlpatterns += [
     path('add_deck', views.add_deck, name='add_deck'),
     path('submit_new_deck', views.submit_new_deck, name='submit_new_deck'),

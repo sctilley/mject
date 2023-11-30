@@ -4,13 +4,44 @@ from django.http import HttpResponse
 from django import forms
 from django.forms import modelform_factory
 from .models import Deck, Flavor, MtgFormat, Archetype
-from .forms import DeckForm, FlavorForm
+from .forms import DeckForm, FlavorForm, LeagueForm
 from django.db.models.functions import Lower
 from django.db.models import Count, Q
 
+from users.models import CustomUser
+
 def home(request):
     user = request.user
-        
+    lform = LeagueForm()
+
+    if request.method == 'POST':
+        print("request.post trigger", request.POST)
+        lform = LeagueForm(request.POST)
+        if lform.is_valid():
+            new_league = lform.save(commit=False)
+            new_league.user = request.user
+            new_league.save()
+
+            user.profile.recentFormat = new_league.mtgFormat
+            user.profile.recentDeck = new_league.myDeck
+            user.profile.save()
+
+            newleague = League.objects.latest('dateCreated')
+            print("new league: ", newleague)
+
+            for i in range(1,6):
+                Match.objects.create(
+                    league_id=new_league.pk,
+                    user=user,
+                    mtgFormat=new_league.mtgFormat,
+                    myDeck=new_league.myDeck,
+                    inLeagueNum=i,
+                    didjawin=None
+                )
+
+
+        else:
+            print("errors: ", lform.errors)
     context = {
 
     }
@@ -24,6 +55,24 @@ def test(request):
 
     return render(request, "core/test.html", context)
 
+#leagues
+def add_league(request):
+    try:
+        current_league = League.objects.filter(user=request.user).latest('dateCreated')
+    except:
+        current_league = League.objects.none()
+
+    if current_league.isFinished == True:
+        context = {
+            'lform':LeagueForm()
+        }
+    else:
+        context = {
+
+        }
+
+
+    return render(request, 'core/partials/add_league.html', context)
 
 # decks 
 @login_required
