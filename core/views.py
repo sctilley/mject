@@ -29,7 +29,6 @@ def test(request):
 @login_required
 def decks(request):
     decks_list = Deck.objects.all().order_by('-dateCreated')
-    print(decks_list)
     context = {
         "decks": decks_list
     }
@@ -37,7 +36,6 @@ def decks(request):
 
 
 def decks_table(request):
-    print("new decks table")
     decks_list = Deck.objects.all().order_by('-dateCreated')
     context = {
         "decks": decks_list
@@ -81,15 +79,41 @@ def edit_deck_submit(request, deck_pk):
 
 def submit_new_deck(request):
     form = DeckForm(request.POST)
+    print("deck form request.post: ", request.POST)
     context = {
         'form':form
     }
 
     if form.is_valid():
-        context['deck'] = form.save()
+        newdeck = form.save()
+        newflavorname = request.POST['flavorname']
+        if newflavorname:
+            print("yes")
+            if 'fisdefault' in request.POST:
+                Flavor.objects.create(
+                    deck_id=newdeck.pk,
+                    name = newflavorname,
+                    isdefault = True
+                )
+            else:
+                Flavor.objects.create(
+                    deck_id=newdeck.pk,
+                    name = newflavorname
+                )
+        else:
+            Flavor.objects.create(
+                    deck_id=newdeck.pk,
+                    name = "none"
+                )
+            print("no")
+
     else:
         print("form error")
         return render(request, 'core/partials/decks/add_deck.html', context)
+    context = {
+        'form':form,
+        'deck':newdeck
+    }
     return render(request, 'core/partials/decks/deck_row.html', context)
 
 def cancel_add_deck(request):
