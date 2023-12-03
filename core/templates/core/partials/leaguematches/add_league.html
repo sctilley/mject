@@ -1,17 +1,29 @@
 {% load crispy_forms_tags %}
 <div class="container">
-    {% if lform %}
         <form action="" method="post">
             {% csrf_token %}
-            <fieldset class="form-group">
+            <fieldset class="form-group" id="newleague">
                 <legend class="border-bottom mb-4">
                     Add new league
                 </legend>
-                {{ lform|crispy }}
+                <select name="mtgFormat" id="mtgFormatid">
+                    <option value="1" selected>Legacy</option>
+                </select>
+                <select name="decknflavor" id="decknflavorid">
+                    <option value="">.</option>
+                    {% for deck in decks %}
+                    {% if deck.flavors.count > 0 %}
+                        {% for flavor in deck.flavors.all %} 
+                            <option value="{{deck.id}}x{{flavor.id}}" id="flavor{{flavor.id}}">{{deck.name}}{% if flavor.name != "none" %}, {{flavor.name}}{% endif %}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="{{deck.id}}" id="deckid">{{deck.name}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                
             </fieldset>
-            <button type="submit">add</button>
+            <button hx-post="{% url 'new_league_submit' %}" >add</button>
         </form>
-    {% else %}
-    <p>Please finish your open league first.</p>
-    {% endif %}
+    
 </div>

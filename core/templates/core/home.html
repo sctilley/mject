@@ -1,11 +1,17 @@
 {% extends 'core/base.html' %}
 {% block content %}
+    {% if leaguecheck > 0 %}
     <div class="container" id="newleague">
-        <button class='btn' hx-get="{% url 'add_league' %}" hx-target="#newleague">
+        <button class='btn' hx-get="{% url 'add_league' %}" hx-target="#query_result" hx-swap="innerHTML">
             <i class="bi bi-plus-lg" style="font-size: 2rem;"></i></svg>
             <small>start new league</small>
         </button>
     </div>
+    {% else %}
+    <div class="container">
+        <p>Please finish your open league first.</p>
+    </div>
+    {% endif %}
 
 
     <div class="container" id="newltarg"> 

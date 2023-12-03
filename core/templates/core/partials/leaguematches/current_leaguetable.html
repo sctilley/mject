@@ -1,5 +1,5 @@
 <table class="table table-hover matchtable">
-    <legend>{{ cLeague.mtgFormat }} League with {% if cLeague.myFlavor %}{{cLeague.myFlavor}}{%endif%} {{cLeague.myDeck}} on {{cLeague.dateCreated|date:"M d, Y"}}</legend>
+    <legend>{{ cLeague.mtgFormat }} League with {% if cLeague.myFlavor %}{{cLeague.myFlavor}}{%endif%} {{cLeague.myDeck}} on {{cLeague.dateCreated|date:"M d, Y"}} {% if cLeague.isFinished %} * finished * {% endif %}</legend>
     <thead>
         <th></th>
         <th>their name</th>

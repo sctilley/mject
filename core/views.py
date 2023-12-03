@@ -11,38 +11,20 @@ from django.db.models import Count, Q
 
 def home(request):
     user = request.user
-    lform = LeagueForm()
-
-    if request.method == 'POST':
-        print("request.post trigger", request.POST)
-        lform = LeagueForm(request.POST)
-        if lform.is_valid():
-            new_league = lform.save(commit=False)
-            new_league.user = request.user
-            new_league.myDeck = new_league.myFlavor.deck
-            new_league.save()
-
-            # user.profile.recentFormat = new_league.mtgFormat
-            # user.profile.recentDeck = new_league.myDeck
-            # user.profile.save()
-
-            newleague = League.objects.latest('dateCreated')
-            print("new league: ", newleague)
-
-            for i in range(1,6):
-                Match.objects.create(
-                    league_id=new_league.pk,
-                    user=user,
-                    mtgFormat=new_league.mtgFormat,
-                    myDeck=new_league.myDeck,
-                    inLeagueNum=i,
-                    didjawin=None
-                )
-
-
+    try:
+        current_league = League.objects.filter(user=request.user).latest('dateCreated')
+        if current_league.isFinished:
+            leaguecheck = 1
         else:
-            print("errors: ", lform.errors)
+            leaguecheck = 0
+    except:
+        current_league = League.objects.none()
+        leaguecheck = 1
+    
+    print(leaguecheck)
+
     context = {
+        'leaguecheck': leaguecheck,
 
     }
     return render(request, "core/home.html", context)
@@ -57,22 +39,17 @@ def test(request):
 
 #leagues
 def add_league(request):
-    try:
-        current_league = League.objects.filter(user=request.user).latest('dateCreated')
-    except:
-        current_league = League.objects.none()
 
-    if current_league.isFinished == True:
-        context = {
-            'lform':LeagueForm()
-        }
-    else:
-        context = {
 
-        }
+    decks = Deck.objects.all()
+    context = {
+        'decks': decks,
+    }
 
 
     return render(request, 'core/partials/leaguematches/add_league.html', context)
+
+
 
 
 def edit_match(request, match_pk):
@@ -181,13 +158,11 @@ def get_league_current(request):
     current_league = League.objects.latest('dateCreated')
     matches_list = current_league.matches.all()
 
-    if current_league.isFinished == True:
-        pass
-    else:
-        context = {
-            "cLeague": current_league,
-            "matches": matches_list
-        }
+
+    context = {
+        "cLeague": current_league,
+        "matches": matches_list
+    }
     return render(request, 'core/partials/leaguematches/current_leaguetable.html', context)
 
 def get_leagues_accordion(request):
@@ -204,6 +179,45 @@ def get_matches_table(request, league_pk):
         "matches": matches_list
     }
     return render(request, 'core/partials/leaguematches/matches_table.html', context)
+
+def new_league_submit(request):
+    user = request.user
+    print("submit new league r")
+    if request.method == 'POST':
+        print(request.POST)
+        decknflavor = request.POST.get('decknflavor')
+        if 'x' in decknflavor:
+            xxy = decknflavor.split("x")
+            print("yes x", xxy)
+            mydeckid = xxy[0]
+            myflavorid = xxy[1]
+
+        else:
+            mydeckid = request.POST.get('decknflavor')
+            myflavorid = 0
+            print("no x")
+
+        new_league = League.objects.create(
+            user=user,
+            mtgFormat_id=request.POST.get('mtgFormat'),
+            myDeck_id=mydeckid,
+            myFlavor_id=myflavorid
+        )
+        for i in range(1,6):
+            Match.objects.create(
+                league_id=new_league.pk,
+                user=user,
+                mtgFormat=new_league.mtgFormat,
+                myDeck=new_league.myDeck,
+                inLeagueNum=i,
+                didjawin=None
+            )
+
+
+    context = {
+    }
+
+    return get_league_current(request)
 
 # decks 
 @login_required
