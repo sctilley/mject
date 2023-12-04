@@ -18,7 +18,7 @@
                 0-5
               {% endif %}
             </div>
-            <div>{{ league.mtgFormat }} League with <strong>{% if league.myFlavor %}{{league.myFlavor}}{%endif%} {{league.myDeck}}</strong> on {{league.dateCreated|date:"M d, Y"}}</div>
+            <div>{{ league.mtgFormat }} League with <strong>{% if league.myFlavor.name != "none" %}{{league.myFlavor}}{%endif%} {{league.myDeck}}</strong> on {{league.dateCreated|date:"M d, Y"}}</div>
           </button>
         </h2>
         <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">

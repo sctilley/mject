@@ -21,8 +21,9 @@ class CustomUser(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # recentFormat = models.ForeignKey('base.MtgFormat', null=True, on_delete=models.CASCADE)
-    # recentDeck = models.ForeignKey('base.Deck', null=True, on_delete=models.CASCADE)
+    recentFormat = models.ForeignKey('core.MtgFormat', null=True, on_delete=models.CASCADE)
+    recentDeck = models.ForeignKey('core.Deck', null=True, on_delete=models.CASCADE)
+    recentFlavor = models.ForeignKey('core.Flavor', null=True, on_delete=models.CASCADE)
     mtgoUserName = models.CharField(null=True, max_length=80)
 
     def __str__(self):

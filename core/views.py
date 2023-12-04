@@ -157,6 +157,7 @@ def get_league_current(request):
 
     current_league = League.objects.latest('dateCreated')
     matches_list = current_league.matches.all()
+    print("cLeague flavor: ", current_league.myFlavor)
 
 
     context = {
