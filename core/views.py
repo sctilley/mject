@@ -1,3 +1,4 @@
+from os import name
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse 
@@ -21,10 +22,12 @@ def home(request):
         current_league = League.objects.none()
         leaguecheck = 1
     
-    print(leaguecheck)
+
+
 
     context = {
         'leaguecheck': leaguecheck,
+        'current_league': current_league,
 
     }
     return render(request, "core/home.html", context)
@@ -39,17 +42,60 @@ def test(request):
 
 #leagues
 def add_league(request):
+    try:
+        current_league = League.objects.filter(user=request.user).latest('dateCreated')
+    except:
+        current_league = League.objects.none()
 
 
     decks = Deck.objects.all()
     context = {
         'decks': decks,
+        'current_league': current_league,
     }
 
 
     return render(request, 'core/partials/leaguematches/add_league.html', context)
 
+def new_league_submit(request):
+    user = request.user
+    print("submit new league r")
+    if request.method == 'POST':
+        print(request.POST)
+        decknflavor = request.POST.get('decknflavor')
+        if 'x' in decknflavor:
+            xxy = decknflavor.split("x")
+            print("yes x", xxy)
+            mydeckid = xxy[0]
+            myflavorid = xxy[1]
 
+        else:
+            mydeckid = request.POST.get('decknflavor')
+            myflavorid = Flavor.objects.get(deck__id=mydeckid, name='none').id
+
+            print("no x")
+
+        new_league = League.objects.create(
+            user=user,
+            mtgFormat_id=request.POST.get('mtgFormat'),
+            myDeck_id=mydeckid,
+            myFlavor_id=myflavorid
+        )
+        for i in range(1,6):
+            Match.objects.create(
+                league_id=new_league.pk,
+                user=user,
+                mtgFormat=new_league.mtgFormat,
+                myDeck=new_league.myDeck,
+                inLeagueNum=i,
+                didjawin=None
+            )
+
+
+    context = {
+    }
+
+    return get_league_current(request)
 
 
 def edit_match(request, match_pk):
@@ -181,44 +227,7 @@ def get_matches_table(request, league_pk):
     }
     return render(request, 'core/partials/leaguematches/matches_table.html', context)
 
-def new_league_submit(request):
-    user = request.user
-    print("submit new league r")
-    if request.method == 'POST':
-        print(request.POST)
-        decknflavor = request.POST.get('decknflavor')
-        if 'x' in decknflavor:
-            xxy = decknflavor.split("x")
-            print("yes x", xxy)
-            mydeckid = xxy[0]
-            myflavorid = xxy[1]
 
-        else:
-            mydeckid = request.POST.get('decknflavor')
-            myflavorid = 0
-            print("no x")
-
-        new_league = League.objects.create(
-            user=user,
-            mtgFormat_id=request.POST.get('mtgFormat'),
-            myDeck_id=mydeckid,
-            myFlavor_id=myflavorid
-        )
-        for i in range(1,6):
-            Match.objects.create(
-                league_id=new_league.pk,
-                user=user,
-                mtgFormat=new_league.mtgFormat,
-                myDeck=new_league.myDeck,
-                inLeagueNum=i,
-                didjawin=None
-            )
-
-
-    context = {
-    }
-
-    return get_league_current(request)
 
 # decks 
 @login_required
