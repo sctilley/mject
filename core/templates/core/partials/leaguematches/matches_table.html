@@ -14,7 +14,7 @@
             <tr>
                 <td>{{ match.inLeagueNum }}.</td>
                 <td>{{ match.theirName }}</td>
-                <td>{{ match.theirDeck }}{% if match.theirFlavor %}, {{match.theirFlavor}}{% endif %}</td>
+                <td>{{ match.theirDeck }}{% if match.theirFlavor.name != "none" %}, {{flavor.name}}{% endif %}</td>
                 {% if match.game1 == 1 %}
                 <td><i class="bi bi-check2" style=" font-size: 2rem;color: rgb(102, 255, 47)"></i></td>
                 {% elif match.game1 == 0 %}

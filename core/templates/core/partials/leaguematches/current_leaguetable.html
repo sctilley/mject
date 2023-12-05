@@ -1,21 +1,34 @@
 <table class="table table-hover matchtable">
-    <legend>{{ cLeague.mtgFormat }} League with {% if cLeague.myFlavor.name != "none" %}{{cLeague.myFlavor}}{% endif %} {{cLeague.myDeck}} on {{cLeague.dateCreated|date:"M d, Y"}} {% if cLeague.isFinished %} * finished * {% endif %}</legend>
+
+    <legend class="text-center">
+        <div class="row">
+            <div class="col">
+                {{ cLeague.mtgFormat }} League
+            </div>
+            <div class="col">
+                {% if cLeague.myFlavor.name != "none" %}{{cLeague.myFlavor}}{% endif %} {{cLeague.myDeck}}
+            </div>
+            <div class="col">
+                {{cLeague.dateCreated|date:"M d, Y"}} {% if cLeague.isFinished %} * finished * {% endif %}
+            </div>
+        </div>
+    </legend>
     <thead>
         <th></th>
-        <th>their name</th>
-        <th>their deck</th>
+        <th>Opponent</th>
+        <th>Deck</th>
         <th colspan="3">Games 1, 2, and 3</th>
-        <th>result</th>
+        <th>Result</th>
 
         <th></th>
         <th></th>
     </thead>
     <tbody>
         {% for match in matches %}
-            <tr>
-                <td>{{ match.inLeagueNum }}.</td>
+            <tr class="align-middle">
+                <td class="align-middle">{{ match.inLeagueNum }}.</td>
                 <td>{{ match.theirName }}</td>
-                <td>{{ match.theirDeck }}{% if match.theirFlavor %}, {{match.theirFlavor}}{% endif %}</td>
+                <td>{{ match.theirDeck }}{% if match.theirFlavor.name != "none" %}, {{match.theirFlavor.name}}{% endif %}</td>
                 {% if match.game1 == 1 %}
                 <td><i class="bi bi-check2" style=" font-size: 2rem;color: rgb(102, 255, 47)"></i></td>
                 {% elif match.game1 == 0 %}
