@@ -37,3 +37,9 @@ urlpatterns += [
     path('<int:flavor_pk>/edit_flavor', views.edit_flavor, name='edit_flavor'),
     path('<int:flavor_pk>/edit_flavor_submit', views.edit_flavor_submit, name='edit_flavor_submit'),
 ]
+
+#stats
+urlpatterns += [
+    path('stats', views.stats, name='stats'),
+
+]

@@ -1,9 +1,9 @@
 {% extends 'core/base.html' %}
 {% block content %}
+
     <div class="card m-3">
         <h5 class="card-title">Match Win Percentage</h5>
-        <div class="card-body">
-            <p>Info for:</p>
+        <div class="card-body" hx-get="{% url 'stats' %}" hx-trigger="load" hx-target="this">
         </div>
     </div>
     {% if current_league.isFinished  %}

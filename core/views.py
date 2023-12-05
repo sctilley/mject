@@ -40,6 +40,33 @@ def test(request):
 
     return render(request, "core/test.html", context)
 
+#stats
+
+def stats(request):
+    try:
+        current_league = League.objects.filter(user=request.user).latest('dateCreated')
+        target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck)
+
+
+    except:
+        current_league = League.objects.none()
+        target_matches = Match.objects.filter(user=request.user)
+
+    if target_matches.count() > 0:
+        matchwinpercentage = ((target_matches.filter(didjawin=1).count(
+        )/target_matches.count()))*100
+    else:
+        matchwinpercentage = 0
+
+
+    context = {
+        'tmatches': target_matches,
+        'matchwinpercentage': matchwinpercentage
+    }
+
+
+    return render(request, 'core/partials/stats/stats.html', context)
+
 #leagues
 def add_league(request):
     try:
