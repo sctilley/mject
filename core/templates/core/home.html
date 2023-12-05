@@ -1,34 +1,43 @@
 {% extends 'core/base.html' %}
 {% block content %}
-
-    <div class="card m-3">
-        <h5 class="card-title">Match Win Percentage</h5>
-        <div class="card-body" hx-get="{% url 'stats' %}" hx-trigger="load" hx-target="this">
+    <div class="row">
+        <div class="col-lg-3">
+            .col-lg-4
+            <div class="card m-3">
+                <h5 class="card-title">Match Win Percentage</h5>
+                <div class="card-body" hx-get="{% url 'stats' %}" hx-trigger="load" hx-target="this">
+                </div>
+            </div>
         </div>
-    </div>
-    {% if current_league.isFinished  %}
-    <div class="container" id="newleague">
-        <button class='btn' hx-get="{% url 'add_league' %}" hx-target="#newleague" hx-swap="innerHTML">
-            <i class="bi bi-plus-lg" style="font-size: 2rem;"></i></svg>
-            <small>start new league</small>
-        </button>
-    </div>
-    {% endif %}
+        <div class="col-lg-auto">
+            .col-lg-8
+                    {% if current_league.isFinished  %}
+            <div class="container" id="newleague">
+                <button class='btn' hx-get="{% url 'add_league' %}" hx-target="#newleague" hx-swap="innerHTML">
+                    <i class="bi bi-plus-lg" style="font-size: 2rem;"></i></svg>
+                    <small>start new league</small>
+                </button>
+            </div>
+            {% endif %}
 
 
-    <div class="container" id="newltarg"> 
-        <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_league_current' %}" hx-trigger="load"></div>
-    </div>
-    <div class="card mb-4">
-        <h5 class="card-title">Player Information Card</h5>
-        <div class="card-body">
-          Update your match and find some player Information
+            <div class="container" id="newltarg"> 
+                <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_league_current' %}" hx-trigger="load"></div>
+            </div>
+            <div class="card mb-4">
+                <h5 class="card-title">Player Information Card</h5>
+                <div class="card-body">
+                Update your match and find some player Information
+                </div>
+            </div>
+            <h2>Past Leagues: </h2>
+            <div class="container">
+                <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_leagues_accordion' %}" hx-trigger="load"></div>
+            </div>
         </div>
-    </div>
-    <h2>Past Leagues: </h2>
-    <div class="container">
-        <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_leagues_accordion' %}" hx-trigger="load"></div>
-    </div>
+    </div> 
+
+
 
 
 
