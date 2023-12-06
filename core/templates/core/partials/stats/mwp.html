@@ -1,34 +1,4 @@
-<table>
-  <tr>
-    <td>5-0s: </td>
-    <td>{{ fiveohs }}</td>
-  </tr>
-  <tr>
-    <td>4-1s: </td>
-    <td>{{ fourones }}</td>
-  </tr>
-  <tr>
-    <td>3-2s: </td>
-    <td>{{ threetwos }}</td>
-  </tr>
-  <tr>
-    <td>2-3s: </td>
-    <td>{{ twothrees }}</td>
-  </tr>
-  <tr>
-    <td>1-4s: </td>
-    <td>{{ onefours }}</td>
-  </tr>  
-  <tr>
-    <td>0-5s: </td>
-    <td>{{ ohfives }}</td>
-  </tr>  
-</table>
-<div>
-  <small>Completed Leagues: {{tleagues.count}}</small>
-</div>
-<div class="line"></div>
-<table>
+<table class="hovertable">
   <tr>
     <th>Match Wins: </th>
     <th>{{matchwinpercentage|floatformat:0}}%</th>
@@ -46,3 +16,41 @@
     <td>{{matcheslost}}</td>
   </tr>  
 </table>
+<div>
+  <small>Completed Leagues: {{tleagues.count}}</small>
+</div>
+<table class="hovertable">
+  <tr>
+    <td>5-0s: </td>
+    <td></td>
+    <td>{{ fiveohs }}</td>
+  </tr>
+  <tr>
+    <td>4-1s: </td>
+    <td></td>
+    <td>{{ fourones }}</td>
+  </tr>
+  <tr>
+    <td>3-2s: </td>
+    <td></td>
+    <td>{{ threetwos }}</td>
+  </tr>
+  <tr>
+    <td>2-3s: </td>
+    <td></td>
+    <td>{{ twothrees }}</td>
+  </tr>
+  <tr>
+    <td>1-4s: </td>
+    <td></td>
+    <td>{{ onefours }}</td>
+  </tr>  
+  <tr>
+    <td>0-5s: </td>
+    <td></td>
+    <td>{{ ohfives }}</td>
+  </tr>  
+</table>
+
+<div class="line"></div>
+

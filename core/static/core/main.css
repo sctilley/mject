@@ -18,3 +18,26 @@ h1 {
     margin: 10px auto;
     border-radius: 30px;
   }
+
+
+table.hovertable {
+    border-collapse: collapse;
+}
+
+table.hovertable tr > td {
+    padding: 2px 6px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+table.hovertable th {
+    padding: 8px 4px;
+}
+
+table.hovertable tbody.center > tr > td {
+    text-align: center;
+}
+
+table.hovertable tr:hover {
+    background-color: var(--primary);
+}
