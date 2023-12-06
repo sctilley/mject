@@ -42,30 +42,100 @@ def test(request):
 
 #stats
 
-def stats(request):
+def mwp (request):
     try:
         current_league = League.objects.filter(user=request.user).latest('dateCreated')
         target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck)
+        target_leagues = League.objects.filter(user=request.user, myDeck=current_league.myDeck, isFinished=True)
 
 
     except:
         current_league = League.objects.none()
         target_matches = Match.objects.filter(user=request.user)
+        target_leagues = League.objects.filter(user=request.user)
+
+    
+
+    
+    fiveohs = 0
+    fourones = 0
+    threetwos = 0
+    twothrees = 0
+    onefours = 0
+    ohfives = 0
+    fiveohsper = 0
+    fouronesper = 0
+    threetwosper = 0
+    twothreesper = 0
+    onefoursper = 0
+    ohfivesper = 0
+
+    for league in target_leagues:
+        wins = league.matches.filter(didjawin=1).count()
+        if wins == 5:
+            fiveohs += 1
+        elif wins == 4:
+            fourones += 1
+        elif wins == 3:
+            threetwos += 1
+        elif wins == 2:
+            twothrees += 1
+        elif wins == 1:
+            onefours += 1
+        else:
+            ohfives += 1
+    
+    closedLeaguesNum = target_leagues.count()
+    if closedLeaguesNum > 0:
+        fiveohsper = (fiveohs / closedLeaguesNum)*100
+        fouronesper = (fourones / closedLeaguesNum)*100
+        threetwosper = (threetwos / closedLeaguesNum)*100
+        twothreesper = (twothrees / closedLeaguesNum)*100
+        onefoursper = (onefours / closedLeaguesNum)*100
+        ohfivesper = (ohfives / closedLeaguesNum)*100
+    else:
+        fiveohsper = 0
+        fouronesper = 0
+        threetwosper = 0
+        twothreesper = 0
+        onefoursper = 0
+        ohfivesper = 0
+
+    matchwinpercentage = 0
+    matchcount = 0
+    matcheswon = 0
+    matcheslost = 0
+
 
     if target_matches.count() > 0:
-        matchwinpercentage = ((target_matches.filter(didjawin=1).count(
-        )/target_matches.count()))*100
+        matchwinpercentage = ((target_matches.filter(didjawin=1).count()/target_matches.count()))*100
     else:
         matchwinpercentage = 0
 
 
     context = {
         'tmatches': target_matches,
-        'matchwinpercentage': matchwinpercentage
+        'tleagues': target_leagues,
+        'matchwinpercentage': matchwinpercentage,
+        'matcheswon': target_matches.filter(didjawin=1).count(),
+        'matcheslost': target_matches.filter(didjawin=0).count(),
+        'matchcount': target_matches.count(),
+        "fiveohs": fiveohs,
+        "fourones": fourones,
+        "threetwos": threetwos,
+        "twothrees": twothrees,
+        "onefours": onefours,
+        "ohfives": ohfives,
+        'fiveohsper': fiveohsper,
+        'fouronesper': fouronesper,
+        'threetwosper': threetwosper,
+        'twothreesper': twothreesper,
+        'onefoursper': onefoursper,
+        'ohfivesper': ohfivesper,
     }
 
 
-    return render(request, 'core/partials/stats/stats.html', context)
+    return render(request, 'core/partials/stats/mwp.html', context)
 
 #leagues
 def add_league(request):

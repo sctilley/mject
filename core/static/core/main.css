@@ -1,3 +1,20 @@
+:root {
+    --primary: #f71995;
+    --secondary: #7B19F7;
+    --light: #EEEEEE;
+    --dark: #140e0e;
+    --highlight: rgb(184, 255, 255);
+
+}
+
 h1 {
     color: blue;
 }
+
+.line {
+    width: 80%;
+    height: 2px;
+    background: var(--primary);
+    margin: 10px auto;
+    border-radius: 30px;
+  }

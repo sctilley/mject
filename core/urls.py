@@ -40,6 +40,6 @@ urlpatterns += [
 
 #stats
 urlpatterns += [
-    path('stats', views.stats, name='stats'),
+    path('mwp', views.mwp, name='mwp'),
 
 ]
