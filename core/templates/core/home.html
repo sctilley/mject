@@ -2,12 +2,12 @@
 {% block content %}
 <div class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-12 col-lg-3">
         Column 1
-        <div class="m-2 card-body border border-secondary" hx-get="{% url 'mwp' %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
+        <div class="m-2 card-body border border-secondary d-flex justify-content-around d-lg-block" hx-get="{% url 'mwp' %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
 
       </div>
-      <div class="col">
+      <div class="col-12 col-lg-9">
         Column 2
         <div class="border border-primary">
             top of column

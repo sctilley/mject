@@ -1,5 +1,4 @@
-<div class="d-inline-block d-lg-block">
-  div 1
+<div class="d-inline-flex d-lg-block">
   <table class="hovertable">
     <tr>
       <th>Match Wins: </th>
@@ -20,13 +19,15 @@
   </table>
 </div>
 
-<div class="line d-inline-block d-none d-lg-block"></div>
+<div class="ho-line d-inline-flex d-none d-lg-block"></div>
+<div class="v-line d-block d-lg-none"></div>
 
-<div class="d-inline-block d-lg-block">
-  <div>
-    <small>Completed Leagues: {{tleagues.count}}</small>
-  </div>
+<div class="d-inline-flex d-lg-block">
  <table class="hovertable">
+  <th colspan="2">
+    Completed Leagues:
+  </th>
+  <th>{{tleagues.count}}</th>
   <tr>
     <td>5-0s: </td>
     <td></td>

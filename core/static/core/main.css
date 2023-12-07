@@ -11,7 +11,7 @@ h1 {
     color: blue;
 }
 
-.line {
+.ho-line {
     width: 80%;
     height: 2px;
     background: var(--primary);
@@ -19,13 +19,18 @@ h1 {
     border-radius: 30px;
   }
 
+.v-line {
+    border-left: 2px solid var(--primary);
+    height: 200px;
+}
+
 
 table.hovertable {
     border-collapse: collapse;
 }
 
 table.hovertable tr > td {
-    padding: 2px 6px;
+    padding: 1px 6px;
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
@@ -40,4 +45,8 @@ table.hovertable tbody.center > tr > td {
 
 table.hovertable tr:hover {
     background-color: var(--primary);
+}
+
+table.matchtable {
+    padding: 0;
 }
