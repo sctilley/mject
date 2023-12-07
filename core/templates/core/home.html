@@ -1,16 +1,17 @@
 {% extends 'core/base.html' %}
 {% block content %}
+<div class="container">
     <div class="row">
-        <div class="col-lg-3">
-            .col-lg-3
-            <div class="card m-3">
-                <div class="card-body" hx-get="{% url 'mwp' %}" hx-trigger="load" hx-target="this">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-auto">
-            .col-lg-8
-                    {% if current_league.isFinished  %}
+      <div class="col">
+        Column 1
+        <div class="m-2 card-body border border-secondary" hx-get="{% url 'mwp' %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
+
+      </div>
+      <div class="col">
+        Column 2
+        <div class="border border-primary">
+            top of column
+            {% if current_league.isFinished  %}
             <div class="container" id="newleague">
                 <button class='btn' hx-get="{% url 'add_league' %}" hx-target="#newleague" hx-swap="innerHTML">
                     <i class="bi bi-plus-lg" style="font-size: 2rem;"></i></svg>
@@ -18,8 +19,7 @@
                 </button>
             </div>
             {% endif %}
-
-
+    
             <div class="container" id="newltarg"> 
                 <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_league_current' %}" hx-trigger="load"></div>
             </div>
@@ -29,16 +29,16 @@
                 Update your match and find some player Information
                 </div>
             </div>
-            <h2>Past Leagues: </h2>
-            <div class="container">
-                <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_leagues_accordion' %}" hx-trigger="load"></div>
-            </div>
         </div>
-    </div> 
-
-
-
-
+      </div>
+    </div>
+</div>
+<div class="container">
+    <h2>Past Leagues: </h2>
+    <div class="container">
+        <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_leagues_accordion' %}" hx-trigger="load"></div>
+    </div>
+</div>
 
 
 {% endblock content %}

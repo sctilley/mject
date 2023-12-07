@@ -1,25 +1,32 @@
-<table class="hovertable">
-  <tr>
-    <th>Match Wins: </th>
-    <th>{{matchwinpercentage|floatformat:0}}%</th>
-  </tr>
-  <tr>
-    <td>Played</td>
-    <td>{{matchcount}}</td>
-  </tr>
-  <tr>
-    <td>Won</td>
-    <td>{{matcheswon}}</td>
-  </tr>  
-  <tr>
-    <td>Lost</td>
-    <td>{{matcheslost}}</td>
-  </tr>  
-</table>
-<div>
-  <small>Completed Leagues: {{tleagues.count}}</small>
+<div class="d-inline-block d-lg-block">
+  div 1
+  <table class="hovertable">
+    <tr>
+      <th>Match Wins: </th>
+      <th>{{matchwinpercentage|floatformat:0}}%</th>
+    </tr>
+    <tr>
+      <td>Played</td>
+      <td>{{matchcount}}</td>
+    </tr>
+    <tr>
+      <td>Won</td>
+      <td>{{matcheswon}}</td>
+    </tr>  
+    <tr>
+      <td>Lost</td>
+      <td>{{matcheslost}}</td>
+    </tr>  
+  </table>
 </div>
-<table class="hovertable">
+
+<div class="line d-inline-block d-none d-lg-block"></div>
+
+<div class="d-inline-block d-lg-block">
+  <div>
+    <small>Completed Leagues: {{tleagues.count}}</small>
+  </div>
+ <table class="hovertable">
   <tr>
     <td>5-0s: </td>
     <td></td>
@@ -50,7 +57,5 @@
     <td></td>
     <td>{{ ohfives }}</td>
   </tr>  
-</table>
-
-<div class="line"></div>
-
+</table> 
+</div>
