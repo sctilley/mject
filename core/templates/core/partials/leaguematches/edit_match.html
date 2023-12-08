@@ -60,8 +60,6 @@
             <label class="form-check-label" for="inlineCheckbox3">3</label>
         </div>
     </td>
-    <td></td>
-
-    <td><a href="#" hx-post="{% url 'edit_match_submit' match.pk %}" hx-target="closest tr" hx-swap="outerHTML" hx-include="closest tr, #flavorcheck" class="text-secondary"><i class="bi bi-check-lg" style="font-size: 2rem;"></i></a>
+    <td colspan="2"><a href="#" hx-post="{% url 'edit_match_submit' match.pk %}" hx-target="closest tr" hx-swap="outerHTML" hx-include="closest tr, #flavorcheck" class="text-secondary"><i class="bi bi-check-lg" style="font-size: 2rem;"></i></a>
     <a href="#" hx-get="{% url 'edit_match_submit' match.pk %}" hx-target="closest tr" hx-swap="outerHTML" class="text-secondary ms-2"><i class="bi bi-x-lg" style="font-size: 2rem;"></i></a></td>
 </tr>

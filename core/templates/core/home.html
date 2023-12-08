@@ -1,18 +1,18 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<div class="container">
+<div class="container" style="padding: 12px;">
     <div class="row">
-      <div class="col-12 col-lg-3">
+      <div class="col-12 col-xl-3">
         Column 1
-        <div class="m-2 card-body border border-secondary d-flex justify-content-around d-lg-block" hx-get="{% url 'mwp' %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
+        <div class="card-body border border-secondary d-flex justify-content-around d-xl-block" hx-get="{% url 'mwp' %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
 
       </div>
-      <div class="col-12 col-lg-9">
+      <div class="col-12 col-xl-9">
         Column 2
         <div class="border border-primary">
             top of column
             {% if current_league.isFinished  %}
-            <div class="container" id="newleague">
+            <div class="container" id="newleague" style="padding: 12px;">
                 <button class='btn' hx-get="{% url 'add_league' %}" hx-target="#newleague" hx-swap="innerHTML">
                     <i class="bi bi-plus-lg" style="font-size: 2rem;"></i></svg>
                     <small>start new league</small>
@@ -20,7 +20,7 @@
             </div>
             {% endif %}
     
-            <div class="container" id="newltarg"> 
+            <div class="container" id="newltarg" style="padding: 12px;"> 
                 <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'get_league_current' %}" hx-trigger="load"></div>
             </div>
             <div class="card mb-4">

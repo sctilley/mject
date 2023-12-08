@@ -39,6 +39,10 @@ table.hovertable th {
     padding: 8px 4px;
 }
 
+table.hovertable td {
+    height: 20px;
+}
+
 table.hovertable tbody.center > tr > td {
     text-align: center;
 }
@@ -48,5 +52,9 @@ table.hovertable tr:hover {
 }
 
 table.matchtable {
+    perspective: none;
+}
+
+table.matchtable tr > td {
     padding: 0;
 }
