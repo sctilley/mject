@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+      <div class="col-4">
+        Player info for: <strong>{{opponame}}</strong>
+      </div>
+      <div class="col-8">
+        {% if oppomatches %}
+            <table class="reporttable">
+                <tr class="matchform">
+                <th>{{opponame}}'s deck</th>
+                <th>Date</th>
+                <th>Reported by</th>
+                
+                </tr>
+                {% for match in oppomatches %}
+                <tr>
+                    <td>{{match.theirDeck.name}}{% if match.theirFlavor.name != "none" %} -- {{match.theirFlavor}}{% endif %}</td>
+                    <td>{{match.dateCreated|date:"N d, Y"}}</td>
+                    <td>{{match.user}}</td>
+                </tr>
+                {% endfor %}
+            </table>  
+        {% else %}
+            No Matches Found
+        {% endif %}
+      </div>
+    </div>
+  </div>

@@ -27,6 +27,7 @@ h1 {
 
 table.hovertable {
     border-collapse: collapse;
+    padding-bottom: 55px;
 }
 
 table.hovertable tr > td {
@@ -57,4 +58,11 @@ table.matchtable {
 
 table.matchtable tr > td {
     padding: 0;
+}
+
+table.reporttable {
+    text-align: left;
+    border-spacing: 6px;
+    margin: 0px;
+    width: 100%;
 }

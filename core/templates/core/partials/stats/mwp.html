@@ -1,7 +1,11 @@
-<div class="d-flex d-xl-block">
+<div class="d-flex d-xl-block" style="text-align: center;">
+  <legend>{% if cLeague.myFlavor.name != "none" %}{{cLeague.myFlavor}}{% endif %} {{cLeague.myDeck}}</legend>
+
+</div>
+<div class="d-flex d-xl-block" style="padding-bottom: 10px;">
   <table class="hovertable">
     <tr>
-      <th>Match Wins: </th>
+      <th>Match Win Percentage </th>
       <th>{{matchwinpercentage|floatformat:0}}%</th>
     </tr>
     <tr>
@@ -24,38 +28,33 @@
 
 <div class="d-flex d-xl-block">
  <table class="hovertable">
-  <th colspan="2">
-    Completed Leagues:
-  </th>
-  <th>{{tleagues.count}}</th>
+  <tr>
+    <th style="width: 178px;">Completed Leagues:</th>
+    <th>{{tleagues.count}}</th>
+  </tr>
+
   <tr>
     <td>5-0s: </td>
-    <td></td>
     <td>{{ fiveohs }}</td>
   </tr>
   <tr>
     <td>4-1s: </td>
-    <td></td>
     <td>{{ fourones }}</td>
   </tr>
   <tr>
     <td>3-2s: </td>
-    <td></td>
     <td>{{ threetwos }}</td>
   </tr>
   <tr>
     <td>2-3s: </td>
-    <td></td>
     <td>{{ twothrees }}</td>
   </tr>
   <tr>
     <td>1-4s: </td>
-    <td></td>
     <td>{{ onefours }}</td>
   </tr>  
   <tr>
     <td>0-5s: </td>
-    <td></td>
     <td>{{ ohfives }}</td>
   </tr>  
 </table> 

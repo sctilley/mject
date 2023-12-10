@@ -41,5 +41,6 @@ urlpatterns += [
 #stats
 urlpatterns += [
     path('mwp', views.mwp, name='mwp'),
+    path('pic', views.pic, name='pic'),
 
 ]

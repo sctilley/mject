@@ -42,6 +42,27 @@ def test(request):
 
 #stats
 
+def pic(request):
+    print(request.GET)
+    opponame = request.GET.get('username')
+
+    try:
+        oppomatches = Match.objects.filter(theirName=opponame).order_by('-dateCreated')[:5]
+    except:
+        oppomatches = None
+
+
+
+    print("oppomatches: ", oppomatches)
+    context = {
+        "opponame": opponame,
+        "oppomatches": oppomatches,
+    }
+
+    return render(request, "core/partials/stats/pic.html", context)
+
+
+
 def mwp (request):
     try:
         current_league = League.objects.filter(user=request.user).latest('dateCreated')
@@ -114,6 +135,7 @@ def mwp (request):
 
 
     context = {
+        'cLeague': current_league,
         'tmatches': target_matches,
         'tleagues': target_leagues,
         'matchwinpercentage': matchwinpercentage,
@@ -198,8 +220,7 @@ def new_league_submit(request):
 def edit_match(request, match_pk):
     match = Match.objects.get(pk=match_pk)
     usernamelist = Match.objects.all().values("theirName").distinct().order_by(Lower("theirName"))
-    print(usernamelist)
-    decks = Deck.objects.all()
+    decks = Deck.objects.all().order_by("name")
     context = {
         'match': match,
         'decks': decks,
@@ -255,7 +276,6 @@ def edit_match_submit(request, match_pk):
         else:
             match.game1 = 0
             match.game2 = 0 
-            match.game3 = 0
             match.didjawin = 0
 
 
@@ -296,11 +316,16 @@ def clear_match(request, match_pk):
     return render(request, 'core/partials/leaguematches/match_row.html', context)
 
 def get_league_current(request):
-    leagues_list = League.objects.all().order_by('-dateCreated')
-
-    current_league = League.objects.latest('dateCreated')
-    matches_list = current_league.matches.all()
-    print("cLeague flavor: ", current_league.myFlavor)
+    user = request.user
+    print(user)
+    leagues_list = League.objects.filter(user=user).order_by('-dateCreated')
+    print("league list: ", leagues_list)
+    try:
+        current_league = leagues_list[0]
+        matches_list = current_league.matches.all()
+    except:
+        current_league = None
+        matches_list = None
 
 
     context = {
@@ -312,13 +337,18 @@ def get_league_current(request):
 def get_leagues_accordion(request):
     leagues_list = League.objects.filter(user=request.user, isFinished=True)
     leagues = leagues_list.annotate(wins=Count("matches", filter=Q(matches__didjawin=True))).order_by("-dateCreated")
+    print("league accordian: ", leagues_list)
     context = {
         "leagues": leagues
     }
     return render(request, 'core/partials/leaguematches/league_accordion.html', context)
 def get_matches_table(request, league_pk):
+
     league = League.objects.get(pk=league_pk)
+
     matches_list = league.matches.all()
+
+    print("matches table: ", league, matches_list)
     context = {
         "matches": matches_list
     }

@@ -1,18 +1,18 @@
-<tr>
-    <td>{{ match.inLeagueNum }}.</td>
+<tr class="align-middle">
+    <td class="align-middle">{{ match.inLeagueNum }}.</td>
     <td>{{ match.theirName }}</td>
-    <td>{{ match.theirDeck }}{% if match.theirFlavor %}, {{match.theirFlavor}}{% endif %}</td>
+    <td>{{ match.theirDeck }}{% if match.theirFlavor.name != "none" %}{% if match.theirFlavor.name != None %}, {{match.theirFlavor.name}}{% endif %}{% endif %}</td>
     {% if match.game1 == 1 %}
     <td><i class="bi bi-check2" style=" font-size: 2rem;color: rgb(102, 255, 47)"></i></td>
     {% elif match.game1 == 0 %}
-    <td><i class="bi bi-x" style="color: red;"></i></td>
+    <td><i class="bi bi-x" style="color: red; font-size: 1.4rem;"></i></td>
     {% else %}
     <td></td>
     {% endif %}
     {% if match.game2 == 1 %}
     <td><i class="bi bi-check2" style=" font-size: 2rem;color: rgb(102, 255, 47)"></i></td>
     {% elif match.game2 == 0 %}
-    <td><i class="bi bi-x" style="color: red;"></i></td>
+    <td><i class="bi bi-x" style="color: red; font-size: 1.4rem;"></i></td>
     {% else %}
     <td></td>
     {% endif %}
@@ -21,20 +21,20 @@
     {% elif match.game3 is None %}
     <td></td>
     {% elif match.game3 == 0 %}
-    <td><i class="bi bi-x" style="color: red;"></i></td>
+    <td><i class="bi bi-x" style="color: red; font-size: 1.4rem;"></i></td>
     {% else %}
     <td></td>
     {% endif %}
 
     {% if match.didjawin == 1 %}
-        <td><i class="bi bi-check-circle" style=" font-size: 2rem; color: rgb(102, 255, 47)"></i></td>
+        <td><i class="bi bi-check-circle" style=" font-size: 1.8rem; color: rgb(102, 255, 47)"></i></td>
     {% elif match.didjawin == 0 %}
-        <td><i class="bi bi-x-circle" style="font-size: 2rem; color: red;"></i></td>
+        <td><i class="bi bi-x-circle" style="font-size: 1.8rem; color: red;"></i></td>
     {% else %}
         <td>unplayed</td>
     {% endif %}
     <td style="padding: 0;">
-        <button class='btn' hx-get="{% url 'edit_match' match.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil" style="font-size: 2rem"></i></button>
-        <button class='btn' hx-get="{% url 'clear_match' match.pk %}" hx-confirm="clear match data?" hx-target="closest tr" hx-swap="outerHTML" ><i class="bi bi-recycle" style="font-size: 1rem; color: red;"></i></svg></button>
+        <a href="" hx-get="{% url 'edit_match' match.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil" style="font-size: 1.8rem; padding-right: 15px;"></i></a>
+        <a href="" hx-get="{% url 'clear_match' match.pk %}" hx-confirm="clear match data?" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-recycle" style="font-size: 1.5rem; color: red;"></i></a>
     </td>
 </tr>
