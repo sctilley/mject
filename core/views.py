@@ -9,6 +9,7 @@ from users.models import User
 from .forms import DeckForm, FlavorForm, LeagueForm, MatchForm
 from django.db.models.functions import Lower
 from django.db.models import Count, Q
+from datetime import date, timedelta
 
 def home(request):
     user = request.user
@@ -66,7 +67,7 @@ def pic(request):
 def mwp (request):
     try:
         current_league = League.objects.filter(user=request.user).latest('dateCreated')
-        target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck)
+        target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck, dateCreated=)
         target_leagues = League.objects.filter(user=request.user, myDeck=current_league.myDeck, isFinished=True)
 
 
