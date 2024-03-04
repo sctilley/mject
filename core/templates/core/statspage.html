@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h1>stats test</h1>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="mystats-tab" data-bs-toggle="tab" data-bs-target="#mystats" type="button" role="tab" aria-controls="mystats" aria-selected="true">mystats</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="allstats-tab" data-bs-toggle="tab" data-bs-target="#allstats" type="button" role="tab" aria-controls="allstats" aria-selected="false">allstats</button>
+    </li>
+
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="mystats" role="tabpanel" aria-labelledby="mystats-tab">...mystats</div>
+    <div class="tab-pane fade" id="allstats" role="tabpanel" aria-labelledby="allstats-tab">
+      
+      ...allstats
+      <div class="content">
+        <div class="tealcard">
+          <select name="formatselect" id="fselect">
+            {% for mtgformats in mtgformats %}
+            <option value="{{mtgformats.id}}">{{mtgformats.name}}</option>
+            {% endfor %}
+          </select>
+          <select name="archeselect" id="aselect">
+            <option value="0">All Users</option>
+            {% for archetype in listofarchetypes %}
+              {% if deck.id == currentleague.myDeck.id %}
+                <option value="{{deck.id}}">{{deck.name}}</option>
+              {% else %}
+              <option value="{{deck.id}}">{{deck.name}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          <button class="ctn" hx-get="{% url 'leaguetable' %}" hx-trigger="load, click" hx-include="#fselect" hx-target="#tableplace">Filter</button>
+        </div>
+        <div class="tableplace" id="tableplace">
+          Loading Leagues...
+        </div>
+      </div>
+    
+    </div>
+  </div>
+  
+
+{% endblock content %}

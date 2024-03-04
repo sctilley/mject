@@ -9,7 +9,7 @@ from users.models import User
 from .forms import DeckForm, FlavorForm, LeagueForm, MatchForm
 from django.db.models.functions import Lower
 from django.db.models import Count, Q
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 
 def home(request):
     user = request.user
@@ -41,10 +41,36 @@ def test(request):
 
     return render(request, "core/test.html", context)
 
+def statspage(request):
+    mtgformats = MtgFormat.objects.all()
+
+    context = {
+        'mtgformats': mtgformats,
+    }
+
+    return render(request, "core/statspage.html", context)
+
+
 #stats
 
+def leaguetable(request):
+    fselect = int(request.GET.get('formatselect'))
+
+    print(fselect)
+
+    if fselect > 0:
+        Leagues = League.objects.filter(mtgFormat=fselect, isFinished=1).annotate(wins=Count("matches", filter=Q(matches__didjawin=1))).order_by("-dateCreated")
+    else:
+        Leagues = League.objects.filter(isFinished=1).annotate(wins=Count("matches", filter=Q(matches__didjawin=1))).order_by("-dateCreated")
+    
+
+    context = {
+    'Leagues': Leagues,
+    }
+
+    return render(request, 'core/partials/stats/leaguetable.html', context)
+
 def pic(request):
-    print(request.GET)
     opponame = request.GET.get('username')
 
     try:
@@ -54,7 +80,6 @@ def pic(request):
 
 
 
-    print("oppomatches: ", oppomatches)
     context = {
         "opponame": opponame,
         "oppomatches": oppomatches,
@@ -62,20 +87,32 @@ def pic(request):
 
     return render(request, "core/partials/stats/pic.html", context)
 
-
-
 def mwp (request):
+    startdate = datetime.today()
+    enddate = startdate - timedelta(days=30)
+    print("end date:", enddate)
+    print("start date:", startdate)
+
+
     try:
         current_league = League.objects.filter(user=request.user).latest('dateCreated')
-        target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck, dateCreated=)
-        target_leagues = League.objects.filter(user=request.user, myDeck=current_league.myDeck, isFinished=True)
-
+        print("1")
+        target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck)
+        print("2")
+        target_leagues = League.objects.filter(user=request.user, myDeck=current_league.myDeck, isFinished=True, dateCreated__gte=datetime.date.today(-30))
+        print("3")
+        print("current league date", current_league.dateCreated)
 
     except:
+        print("excpetion")
         current_league = League.objects.none()
         target_matches = Match.objects.filter(user=request.user)
         target_leagues = League.objects.filter(user=request.user)
 
+    
+    
+    # print("target leagues: ", target_leagues)
+    print("target matches: ", target_matches)
     
 
     
@@ -179,9 +216,7 @@ def add_league(request):
 
 def new_league_submit(request):
     user = request.user
-    print("submit new league r")
     if request.method == 'POST':
-        print(request.POST)
         decknflavor = request.POST.get('decknflavor')
         if 'x' in decknflavor:
             xxy = decknflavor.split("x")
@@ -217,7 +252,6 @@ def new_league_submit(request):
 
     return get_league_current(request)
 
-
 def edit_match(request, match_pk):
     match = Match.objects.get(pk=match_pk)
     usernamelist = Match.objects.all().values("theirName").distinct().order_by(Lower("theirName"))
@@ -237,7 +271,6 @@ def edit_match_submit(request, match_pk):
     context['match'] = match
     if request.method == 'POST':
         form = MatchForm()
-        print("post here22", request.POST)
         match.theirName = request.POST.get('username')
         decknflavor = request.POST.get('decknflavor')
         if 'x' in decknflavor:
@@ -312,15 +345,12 @@ def clear_match(request, match_pk):
     context = {
         'match':match
     }
-    print("match cleared: ", match)
 
     return render(request, 'core/partials/leaguematches/match_row.html', context)
 
 def get_league_current(request):
     user = request.user
-    print(user)
     leagues_list = League.objects.filter(user=user).order_by('-dateCreated')
-    print("league list: ", leagues_list)
     try:
         current_league = leagues_list[0]
         matches_list = current_league.matches.all()
@@ -338,7 +368,6 @@ def get_league_current(request):
 def get_leagues_accordion(request):
     leagues_list = League.objects.filter(user=request.user, isFinished=True)
     leagues = leagues_list.annotate(wins=Count("matches", filter=Q(matches__didjawin=True))).order_by("-dateCreated")
-    print("league accordian: ", leagues_list)
     context = {
         "leagues": leagues
     }
@@ -349,7 +378,6 @@ def get_matches_table(request, league_pk):
 
     matches_list = league.matches.all()
 
-    print("matches table: ", league, matches_list)
     context = {
         "matches": matches_list
     }
@@ -365,8 +393,6 @@ def decks(request):
         "decks": decks_list
     }
     return render(request, 'core/decks.html', context)
-
-
 def decks_table(request):
     decks_list = Deck.objects.all().order_by('-dateCreated')
     context = {
@@ -411,7 +437,6 @@ def edit_deck_submit(request, deck_pk):
 
 def submit_new_deck(request):
     form = DeckForm(request.POST)
-    print("deck form request.post: ", request.POST)
     context = {
         'form':form
     }
@@ -442,7 +467,6 @@ def submit_new_deck(request):
                 )
 
     else:
-        print("form error")
         return render(request, 'core/partials/decks/add_deck.html', context)
     context = {
         'form':form,
@@ -453,9 +477,7 @@ def submit_new_deck(request):
 def cancel_add_deck(request):
     return HttpResponse()
 
-    
 def add_varient(request, deck_pk):
-    print("add varient")
     context = {
         'form':FlavorForm(initial={'deck': deck_pk})
     }
@@ -470,7 +492,6 @@ def submit_new_flavor(request):
     if form.is_valid():
         new_flavor = form.save(commit=False)
         if new_flavor.isdefault == True:
-            print("to do logic")
             Flavor.objects.all().update(isdefault=False)
             new_flavor.save()
         else:
@@ -478,11 +499,9 @@ def submit_new_flavor(request):
 
         affecteddeck = Deck.objects.get(id=new_flavor.deck.id)
             
-        print("affecteddeck: ", affecteddeck)
         newflavorsdecksflavors = Flavor.objects.filter()
         context['flavor'] = new_flavor
     else:
-        print("form error")
         return render(request, 'core/partials/decks/new_varient.html', context)
     return render(request, 'core/partials/decks/new_varient.html', context)
 

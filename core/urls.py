@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('decks/', views.decks, name='decks'),
     path('test/', views.test, name='test'),
+    path('stats/', views.statspage, name='statspage'),
 ]
 
 
@@ -42,5 +43,7 @@ urlpatterns += [
 urlpatterns += [
     path('mwp', views.mwp, name='mwp'),
     path('pic', views.pic, name='pic'),
+
+    path('leaguetable/', views.leaguetable, name='leaguetable'),
 
 ]
