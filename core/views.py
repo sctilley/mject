@@ -96,11 +96,8 @@ def mwp (request):
 
     try:
         current_league = League.objects.filter(user=request.user).latest('dateCreated')
-        print("1")
         target_matches = Match.objects.filter( Q(didjawin=True) | Q(didjawin=False), user=request.user, myDeck=current_league.myDeck)
-        print("2")
         target_leagues = League.objects.filter(user=request.user, myDeck=current_league.myDeck, isFinished=True, dateCreated__gte=datetime.date.today(-30))
-        print("3")
         print("current league date", current_league.dateCreated)
 
     except:
