@@ -1,48 +1,149 @@
 {% extends 'core/base.html' %}
+
 {% block content %}
+
 
 <h1>stats test</h1>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="mystats-tab" data-bs-toggle="tab" data-bs-target="#mystats" type="button" role="tab" aria-controls="mystats" aria-selected="true">mystats</button>
+      <button class="nav-link" id="mystats-tab" data-bs-toggle="tab" data-bs-target="#mystats" type="button" role="tab" aria-controls="mystats" aria-selected="true">mystats</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="allstats-tab" data-bs-toggle="tab" data-bs-target="#allstats" type="button" role="tab" aria-controls="allstats" aria-selected="false">allstats</button>
+      <button class="nav-link active" id="allstats-tab" data-bs-toggle="tab" data-bs-target="#allstats" type="button" role="tab" aria-controls="allstats" aria-selected="false">allstats</button>
     </li>
 
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="mystats" role="tabpanel" aria-labelledby="mystats-tab">...mystats</div>
-    <div class="tab-pane fade" id="allstats" role="tabpanel" aria-labelledby="allstats-tab">
-      
-      ...allstats
-      <div class="content">
-        <div class="tealcard">
-          <select name="formatselect" id="fselect">
-            {% for mtgformats in mtgformats %}
-            <option value="{{mtgformats.id}}">{{mtgformats.name}}</option>
-            {% endfor %}
-          </select>
-          <select name="archeselect" id="aselect">
-            <option value="0">All Users</option>
-            {% for archetype in listofarchetypes %}
-              {% if deck.id == currentleague.myDeck.id %}
-                <option value="{{deck.id}}">{{deck.name}}</option>
-              {% else %}
-              <option value="{{deck.id}}">{{deck.name}}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-          <button class="ctn" hx-get="{% url 'leaguetable' %}" hx-trigger="load, click" hx-include="#fselect" hx-target="#tableplace">Filter</button>
-        </div>
-        <div class="tableplace" id="tableplace">
-          Loading Leagues...
-        </div>
-      </div>
-    
-    </div>
-  </div>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade" id="mystats" role="tabpanel" aria-labelledby="mystats-tab">
+    ...mystats
+    <button onclick="myFunction()">Click me!</button>
   
+  </div>
+  <div class="tab-pane fade show active" id="allstats" role="tabpanel" aria-labelledby="allstats-tab">
+    
+    ...allstats
+    
+    <div class="content">
+      <div class="tealcard">
+        <select name="formatselect" id="fselect">
+          {% for mtgformats in mtgformats %}
+          <option value="{{mtgformats.id}}">{{mtgformats.name}}</option>
+          {% endfor %}
+        </select>
+        <select name="archeselect" id="aselect">
+          <option value="0">All Decks</option>
+          {% for archetype in listofarchetypes %}
+            {% if deck.id == currentleague.myDeck.id %}
+              <option value="{{deck.id}}">{{deck.name}}</option>
+            {% else %}
+            <option value="{{deck.id}}">{{deck.name}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <button hx-get="{% url 'leaguetable' %}" hx-trigger="load, click" hx-include="#fselect" hx-target="#tableplace">Filter</button>
+      </div>
+      <div class="tableplace" id="tableplace">
+        Loading Leagues...
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+
+<!-- <script>
+function sortTableAlpha(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("allleaguestable");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+function sortTableNum(n) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("allleaguestable");
+    switching = true;
+    console.log("hello world", n)
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        //check if the two rows should switch place:
+        if (Number(x.innerHTML) > Number(y.innerHTML)) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+</script> -->
+
 
 {% endblock content %}

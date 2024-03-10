@@ -66,3 +66,17 @@ table.reporttable {
     margin: 0px;
     width: 100%;
 }
+
+.tealcard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 12px;
+    text-align: center;
+    background-color: rgb(184, 255, 255);
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--primary);
+    border-radius: 0.3rem;
+    margin-bottom: 20px;
+    margin: 20px;
+}
+

@@ -54,14 +54,8 @@ def statspage(request):
 #stats
 
 def leaguetable(request):
-    fselect = int(request.GET.get('formatselect'))
 
-    print(fselect)
-
-    if fselect > 0:
-        Leagues = League.objects.filter(mtgFormat=fselect, isFinished=1).annotate(wins=Count("matches", filter=Q(matches__didjawin=1))).order_by("-dateCreated")
-    else:
-        Leagues = League.objects.filter(isFinished=1).annotate(wins=Count("matches", filter=Q(matches__didjawin=1))).order_by("-dateCreated")
+    Leagues = League.objects.filter(isFinished=1).annotate(wins=Count("matches", filter=Q(matches__didjawin=1))).order_by("-dateCreated")
     
 
     context = {
