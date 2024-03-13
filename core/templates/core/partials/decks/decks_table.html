@@ -21,7 +21,7 @@
                 </td>
                 <td>
                     <!-- MODAL HERE -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vformModal" data-bs-whatever="{{deck.name}}">Varients of {{deck.name}}</button>
+                    <button hx-get="{% url 'flavorModal' deck.pk %}" hx-target="#vformModal" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#vformModal" data-bs-whatever="{{deck.name}}" class="btn btn-primary">Varients of {{deck.name}}</button>
                 </td>
                 <td>
                     <button class='btn' hx-get="{% url 'edit_deck' deck.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil" style="font-size: 1.5rem"></i></svg></button>

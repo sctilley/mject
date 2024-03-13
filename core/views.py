@@ -524,3 +524,13 @@ def delete_flavor(request, flavor_pk):
     flavor = Flavor.objects.get(pk=flavor_pk)
     flavor.delete()
     return HttpResponse()
+
+def flavorModal(request, deck_pk):
+    deck = Deck.objects.get(pk=deck_pk)
+    print("modal deck: ", deck)
+
+    context = {
+        'deck': deck,
+    }
+
+    return render(request, 'core/partials/decks/flavorModal.html', context)
