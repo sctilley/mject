@@ -278,3 +278,4 @@ ntrack_project.code-workspace
 *Db.*
 *.sqlite3
 db.sqlite3
+mject/settings.py
