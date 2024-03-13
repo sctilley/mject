@@ -277,5 +277,4 @@ ntrack_project.code-workspace
 
 *Db.*
 *.sqlite3
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django
 db.sqlite3
