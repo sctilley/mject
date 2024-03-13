@@ -1,73 +1,28 @@
 {% load static %}
-<table class="table table-hover">
+<table class="table table-hover stable">
     <thead>
-        <th>Date added</th>
-        <th>Name</th>
-        <th>Format</th>
-        <th>Archetype</th>
-        <th>Varients</th>
-        <th>Varient Modal</th>
+        <th>Date <i class="bi bi-caret-down"></i></th>
+        <th>Name <i class="bi bi-caret-down"></i></th>
+        <th>Format <i class="bi bi-caret-down"></i></th>
+        <th>Archetype <i class="bi bi-caret-down"></i></th>
+        <th>Varient Modal <i></i></th>
         <th></th>
     </thead>
     <tbody>
         {% for deck in decks %}
             <tr>
-                <td>{{ deck.dateCreated|date:"M d, Y" }}</td>
+                <td>{{ deck.dateCreated|date:"SHORT_DATE_FORMAT" }}</td>
                 <td>{{ deck.name }}</td>
                 <td>{{ deck.mtgFormat }}</td>
                 <td>{{ deck.archetype }}</td>
-                <td> 
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{deck.id}}">Varients ({{ deck.flavors.count|add:"-1" }})</button>
-                </td>
                 <td>
                     <!-- MODAL HERE -->
-                    <button hx-get="{% url 'flavorModal' deck.pk %}" hx-target="#vformModal" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#vformModal" data-bs-whatever="{{deck.name}}" class="btn btn-primary">Varients of {{deck.name}}</button>
+                    <button hx-get="{% url 'flavorModal' deck.pk %}" hx-target="#vformModal" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#vformModal" data-bs-whatever="{{deck.name}}" class="btn btn-primary">Varients of {{deck.name}} ({{ deck.flavors.count|add:"-1" }})</button>
                 </td>
                 <td>
                     <button class='btn' hx-get="{% url 'edit_deck' deck.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil" style="font-size: 1.5rem"></i></svg></button>
                     <button class='btn' hx-confirm='Are you Sure?' hx-target="closest tr" hx-swap="outerHTML swap:1s" hx-delete="{% url 'delete_deck' deck.pk %}"><i class="bi bi-trash3" style="font-size: 1.5rem"></i></button>
                 </td>
-            </tr>
-            <tr class="collapse" id="collapse{{deck.id}}">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <button class='btn' hx-get="{% url 'add_varient' deck.pk %}" hx-target="next tbody" hx-swap="afterbegin">
-                        <i class="bi bi-folder-plus" style="font-size: 1.5rem"></i>
-                    </button>
-                </td>
-                
-                
-                <td>
-                    <table class="table">
-                        <tbody>
-                            {% for flavor in deck.flavors.all %}
-                                {% if flavor.name != "none" %}
-                                    <tr>
-                                        {% if flavor.isdefault %}
-                                        <td>
-                                            <strong>{{flavor.name}}</strong>
-                                        </td>
-                                        {% else %}
-                                        
-                                        <td>
-                                            
-                                                {{flavor.name}}
-                                        </td>
-                                        {% endif %}
-                                        <td>
-                                            <button class='btn' hx-get="{% url 'edit_flavor' flavor.pk %}" hx-target="closest tr" hx-swap="outerHTML"><i class="bi bi-pencil"></i></button>
-                                            <button class='btn' hx-confirm='Are you Sure?' hx-target="closest tr" hx-swap="outerHTML swap:1s" hx-delete="{% url 'delete_flavor' flavor.pk %}"><i class="bi bi-trash3"></i></button>
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                </td>
-                <td></td>
             </tr>
 
         {% endfor %}

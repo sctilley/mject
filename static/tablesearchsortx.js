@@ -67,7 +67,6 @@ function sortTable(column, sort_asc, head) {
         // let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
         //     second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-
         if (head.textContent.includes("Date")) {
                 var xxx = convertDate(a.querySelectorAll('td')[column].textContent),
                     yyy = convertDate(b.querySelectorAll('td')[column].textContent);

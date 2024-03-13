@@ -2,16 +2,18 @@
 {% block content %}
 
 
-    <div class="container">
-        <h2>Deck Database</h2>
-        <div class="input-group">
-            <input type="search" placeholder="Search Data...">
-        </div>
-        <button class='btn' hx-get="{% url 'add_deck' %}" hx-target="next tbody" hx-swap="afterbegin">
-            <i class="bi bi-plus-lg" style="font-size: 2rem;"></i>
-            <small class="ms-2">add deck</small>
-        </button>
-        <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'decks_table' %}" hx-trigger="load"></div>
+<div class="container">
+    <div class="two alt-two">
+        <h1>Deck Database</h1>
     </div>
+    <div class="input-group">
+        <input type="search" placeholder="Search Data...">
+    </div>
+    <button class='btn' hx-get="{% url 'add_deck' %}" hx-target="next tbody" hx-swap="afterbegin">
+        <i class="bi bi-plus-lg" style="font-size: 2rem;"></i>
+        <small class="ms-2">add deck</small>
+    </button>
+    <div id="query_result" hx-target="this" hx-swap="innerHTML" hx-get="{% url 'decks_table' %}" hx-trigger="load"></div>
+</div>
 
 {% endblock content %}

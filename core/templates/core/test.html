@@ -3,26 +3,17 @@
 
 <h1>Cofre test</h1>
 
-<button 
-    hx-get="{% url 'flavorModal' %}" 
-    hx-target="#modals-here" 
-    hx-trigger="click" 
-    data-bs-toggle="modal" 
-    data-bs-target="#modals-here"
-    class="btn btn-primary">Open Modal</button>
-
-<div id="modals-here"
-    class="modal modal-blur fade"
-    style="display: none"
-    aria-hidden="false"
-    tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-          here is the old modal content
-        </div>
-    </div>
-</div>
+<div class="two">
+    <h1>Style Two
+      <span>Example Tagline Text</span>
+    </h1>
+  </div>
   
+  <div class="two alt-two">
+    <h1>Alternate
+      <span>Example Tagline Text</span>
+    </h1>
+  </div>
 
 
 {% endblock content %}
