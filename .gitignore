@@ -275,4 +275,6 @@ ntrack_project.code-workspace
 .history
 .ionide
 
+*Db.*
+*.sqlite3
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django
